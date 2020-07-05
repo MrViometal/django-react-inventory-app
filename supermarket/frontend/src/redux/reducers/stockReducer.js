@@ -1,4 +1,4 @@
-import { GET_STOCK } from '../actions/types';
+import { GET_STOCK, DELETE_STOCK } from '../actions/types';
 
 const initialState = {
   stock: [],
@@ -10,6 +10,11 @@ function StockReducer(state = initialState, action) {
       return {
         ...state,
         stock: action.payload,
+      };
+    case DELETE_STOCK:
+      return {
+        ...state,
+        stock: state.stock.filter((stock) => stock.id !== action.payload),
       };
 
     default:
