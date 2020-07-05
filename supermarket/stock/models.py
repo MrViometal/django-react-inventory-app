@@ -19,8 +19,10 @@ class Supplier(models.Model):
 class Product(models.Model):
     productName = models.CharField(max_length=100)
     productCode = models.CharField(max_length=6, unique=True)
-    productPrice = models.DecimalField(max_digits=5, decimal_places=2)
-    quantity = models.IntegerField(validators=[MaxValueValidator(10), MinValueValidator(1)])
+    # no more than 99,999,999.99 for price
+    productPrice = models.DecimalField(max_digits=10, decimal_places=2)
+    # no more thant 999 units
+    quantity = models.IntegerField(validators=[MaxValueValidator(1000), MinValueValidator(1)])
     description = models.CharField(max_length=600, blank=True)
     manufacturerID = models.ForeignKey(Manufacturer, on_delete=models.CASCADE)
     supplierID = models.ForeignKey(Supplier, on_delete=models.CASCADE)
