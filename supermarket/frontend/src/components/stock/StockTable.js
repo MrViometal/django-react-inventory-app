@@ -8,6 +8,8 @@ import {
   subtractStock,
 } from '../../redux/actions/stockActions';
 import { getManufacturers } from '../../redux/actions/manufacturersActions';
+import { getSuppliers } from '../../redux/actions/suppliersActions';
+
 import {
   TrashFill,
   PlusSquareFill,
@@ -20,14 +22,23 @@ export class StockTable extends Component {
   };
   static propTypes = {
     stock: PropTypes.array.isRequired,
+
+    // Stock methods
     getStock: PropTypes.func.isRequired,
     addStock: PropTypes.func.isRequired,
     subtractStock: PropTypes.func.isRequired,
     deleteStock: PropTypes.func.isRequired,
+
+    // Manufacturers methods
+    getManufacturers: PropTypes.func.isRequired,
+
+    // Suppliers methods
+    getSuppliers: PropTypes.func.isRequired,
   };
 
   componentDidMount() {
     this.props.getManufacturers();
+    this.props.getSuppliers();
     this.props.getStock();
   }
 
@@ -84,10 +95,10 @@ export class StockTable extends Component {
   };
 
   render() {
-    const { stock, manufacturers } = this.props;
+    const { stock, manufacturers, suppliers } = this.props;
     let JoinedTable;
 
-    if (manufacturers.length) {
+    if (manufacturers.length && suppliers.length) {
       JoinedTable = stock
         .sort(function (a, b) {
           return a.id - b.id;
@@ -106,7 +117,12 @@ export class StockTable extends Component {
                 ).manufacturerName
               }
             </td>
-            <td>{item.supplierID}</td>
+            <td>
+              {
+                suppliers.find((person) => person.id === item.supplierID)
+                  .supplierName
+              }
+            </td>
             <td>
               {item.description.length < 20
                 ? item.description
@@ -169,7 +185,15 @@ export class StockTable extends Component {
               <th>Delete</th>
             </tr>
           </thead>
-          <tbody>{JoinedTable}</tbody>
+          <tbody>
+            {JoinedTable ? (
+              JoinedTable
+            ) : (
+              <tr>
+                <td>Loading...</td>
+              </tr>
+            )}
+          </tbody>
         </table>
       </Fragment>
     );
@@ -179,11 +203,13 @@ export class StockTable extends Component {
 const mapStateToProps = (state) => ({
   stock: state.stockReducer.stock,
   manufacturers: state.manufacturersReducer.manufacturers,
+  suppliers: state.suppliersReducer.suppliers,
 });
 
 export default connect(mapStateToProps, {
   getStock,
   getManufacturers,
+  getSuppliers,
   deleteStock,
   addStock,
   subtractStock,

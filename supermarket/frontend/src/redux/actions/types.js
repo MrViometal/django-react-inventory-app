@@ -5,5 +5,7 @@ export const SUBTRACT_STOCK = 'SUBTRACT_STOCK';
 export const DELETE_STOCK = 'DELETE_STOCK';
 
 // Manufacturers Actions
-
 export const GET_MANUFACTURERS = 'GET_MANUFACTURERS';
+
+// Suppliers Actions
+export const GET_SUPPLIERS = 'GET_SUPPLIERS';
