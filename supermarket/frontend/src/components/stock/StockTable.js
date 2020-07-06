@@ -7,6 +7,7 @@ import {
   addStock,
   subtractStock,
 } from '../../redux/actions/stockActions';
+import { getManufacturers } from '../../redux/actions/manufacturersActions';
 import {
   TrashFill,
   PlusSquareFill,
@@ -26,6 +27,7 @@ export class StockTable extends Component {
   };
 
   componentDidMount() {
+    this.props.getManufacturers();
     this.props.getStock();
   }
 
@@ -82,7 +84,73 @@ export class StockTable extends Component {
   };
 
   render() {
-    const { stock } = this.props;
+    const { stock, manufacturers } = this.props;
+    let JoinedTable;
+
+    if (manufacturers.length) {
+      JoinedTable = stock
+        .sort(function (a, b) {
+          return a.id - b.id;
+        })
+        .map((item) => (
+          <tr key={item.id}>
+            <td>{item.id} </td>
+            <td>{item.productName}</td>
+            <td>{item.productCode}</td>
+            <td>{item.quantity}</td>
+            <td>{`$${item.productPrice}`}</td>
+            <td>
+              {
+                manufacturers.find(
+                  (person) => person.id === item.manufacturerID,
+                ).manufacturerName
+              }
+            </td>
+            <td>{item.supplierID}</td>
+            <td>
+              {item.description.length < 20
+                ? item.description
+                : item.description.substr(0, 20) + '...'}
+            </td>
+            <td>
+              <div className='input-group'>
+                <input
+                  type='text'
+                  className='form-control'
+                  placeholder='Quantity'
+                  onChange={(e) => this.changeQuantity(e.target.value)}
+                  style={{ width: '50px' }}
+                />
+                <div className='input-group-append' id='button-addon4'>
+                  <button
+                    onClick={() => this.addStockHandler(item)}
+                    className='btn btn-success btn-sm'
+                    style={{ width: '50px' }}
+                  >
+                    <PlusSquareFill />
+                  </button>
+                  <button
+                    onClick={() => this.subtractStockHandler(item)}
+                    className='btn btn-info btn-sm'
+                    style={{ width: '50px' }}
+                  >
+                    <DashSquareFill />
+                  </button>
+                </div>
+              </div>
+            </td>
+
+            <td>
+              <button
+                onClick={() => this.deleteStockHandler(item.id)}
+                className='btn btn-danger btn-sm'
+              >
+                <TrashFill />
+              </button>
+            </td>
+          </tr>
+        ));
+    }
     return (
       <Fragment>
         <h2>Stock in Market</h2>
@@ -101,8 +169,28 @@ export class StockTable extends Component {
               <th>Delete</th>
             </tr>
           </thead>
-          <tbody>
-            {stock
+          <tbody>{JoinedTable}</tbody>
+        </table>
+      </Fragment>
+    );
+  }
+}
+
+const mapStateToProps = (state) => ({
+  stock: state.stockReducer.stock,
+  manufacturers: state.manufacturersReducer.manufacturers,
+});
+
+export default connect(mapStateToProps, {
+  getStock,
+  getManufacturers,
+  deleteStock,
+  addStock,
+  subtractStock,
+})(StockTable);
+
+{
+  /* {stock
               .sort(function (a, b) {
                 return a.id - b.id;
               })
@@ -114,6 +202,11 @@ export class StockTable extends Component {
                   <td>{item.quantity}</td>
                   <td>{`$${item.productPrice}`}</td>
                   <td>{item.manufacturerID}</td>
+                  // {/* {console.log(
+                  //     manufacturers.find(
+                  //       (person) => person.id === item.manufacturerID,
+                  //     ).manufacturerName,
+                  //   )} 
                   <td>{item.supplierID}</td>
                   <td>
                     {item.description.length < 20
@@ -157,21 +250,5 @@ export class StockTable extends Component {
                     </button>
                   </td>
                 </tr>
-              ))}
-          </tbody>
-        </table>
-      </Fragment>
-    );
-  }
+              ))} */
 }
-
-const mapStateToProps = (state) => ({
-  stock: state.stockReducer.stock,
-});
-
-export default connect(mapStateToProps, {
-  getStock,
-  deleteStock,
-  addStock,
-  subtractStock,
-})(StockTable);

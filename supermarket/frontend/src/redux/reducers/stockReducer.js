@@ -46,13 +46,6 @@ function StockReducer(state = initialState, action) {
         stock: state.stock.filter((stock) => stock.id !== action.payload),
       };
 
-    // case ADD_STOCK:
-    //   console.log('delete');
-    //   return {
-    //     ...state,
-    //     stock: state.stock.filter((stock) => stock.id !== action.payload),
-    //   };
-
     default:
       return state;
   }
