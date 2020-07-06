@@ -7,6 +7,11 @@ import {
   addStock,
   subtractStock,
 } from '../../redux/actions/stockActions';
+import {
+  TrashFill,
+  PlusSquareFill,
+  DashSquareFill,
+} from 'react-bootstrap-icons';
 
 export class StockTable extends Component {
   state = {
@@ -34,39 +39,41 @@ export class StockTable extends Component {
   addStockHandler = (item) => {
     const { quantity: inputQuantity } = this.state;
     const total = Number(item.quantity) + Number(inputQuantity);
-    if (total > 10000) {
-      alert(`Quantity can't be more than 1000`);
-    } else {
-      if (
-        confirm(
-          `are you sure you want to add ${inputQuantity} items? total will be ${total}`,
-        )
-      ) {
-        this.props.addStock(item.id, {
-          ...item,
-          quantity: item.quantity + Number(inputQuantity),
-        });
+    if (inputQuantity)
+      if (total > 10000) {
+        alert(`Quantity can't be more than 1000`);
+      } else {
+        if (
+          confirm(
+            `are you sure you want to add ${inputQuantity} items? total will be ${total}`,
+          )
+        ) {
+          this.props.addStock(item.id, {
+            ...item,
+            quantity: item.quantity + Number(inputQuantity),
+          });
+        }
       }
-    }
   };
 
   subtractStockHandler = (item) => {
     const { quantity: inputQuantity } = this.state;
     const total = Number(item.quantity) - Number(inputQuantity);
-    if (total < 0) {
-      alert(`Quantity can't be less than 0`);
-    } else {
-      if (
-        confirm(
-          `are you sure you want to add ${inputQuantity} items? total will be ${total}`,
-        )
-      ) {
-        this.props.subtractStock(item.id, {
-          ...item,
-          quantity: item.quantity - Number(inputQuantity),
-        });
+    if (inputQuantity)
+      if (total < 0) {
+        alert(`Quantity can't be less than 0`);
+      } else {
+        if (
+          confirm(
+            `are you sure you want to add ${inputQuantity} items? total will be ${total}`,
+          )
+        ) {
+          this.props.subtractStock(item.id, {
+            ...item,
+            quantity: item.quantity - Number(inputQuantity),
+          });
+        }
       }
-    }
   };
 
   changeQuantity = (value) => {
@@ -83,23 +90,15 @@ export class StockTable extends Component {
           <thead>
             <tr>
               <th>ID</th>
-
               <th>Name</th>
-
               <th>Code</th>
-
               <th>Quantity</th>
-
               <th>Unit Price</th>
-
               <th>Manufacturer</th>
-
               <th>Supplier</th>
-
               <th>Description</th>
-
-              <th></th>
-              <th></th>
+              <th>Change Quantity</th>
+              <th>Delete</th>
             </tr>
           </thead>
           <tbody>
@@ -109,20 +108,24 @@ export class StockTable extends Component {
               })
               .map((item) => (
                 <tr key={item.id}>
-                  <td>{item.id}</td>
+                  <td>{item.id} </td>
                   <td>{item.productName}</td>
                   <td>{item.productCode}</td>
                   <td>{item.quantity}</td>
                   <td>{`$${item.productPrice}`}</td>
                   <td>{item.manufacturerID}</td>
                   <td>{item.supplierID}</td>
-                  <td>{item.description}</td>
+                  <td>
+                    {item.description.length < 20
+                      ? item.description
+                      : item.description.substr(0, 20) + '...'}
+                  </td>
                   <td>
                     <div className='input-group'>
                       <input
                         type='text'
                         className='form-control'
-                        placeholder='quantity'
+                        placeholder='Quantity'
                         onChange={(e) => this.changeQuantity(e.target.value)}
                         style={{ width: '50px' }}
                       />
@@ -130,16 +133,16 @@ export class StockTable extends Component {
                         <button
                           onClick={() => this.addStockHandler(item)}
                           className='btn btn-success btn-sm'
-                          style={{ width: '70px' }}
+                          style={{ width: '50px' }}
                         >
-                          Add
+                          <PlusSquareFill />
                         </button>
                         <button
                           onClick={() => this.subtractStockHandler(item)}
                           className='btn btn-info btn-sm'
-                          style={{ width: '70px' }}
+                          style={{ width: '50px' }}
                         >
-                          Subtract
+                          <DashSquareFill />
                         </button>
                       </div>
                     </div>
@@ -150,7 +153,7 @@ export class StockTable extends Component {
                       onClick={() => this.deleteStockHandler(item.id)}
                       className='btn btn-danger btn-sm'
                     >
-                      DELETE
+                      <TrashFill />
                     </button>
                   </td>
                 </tr>
@@ -165,62 +168,6 @@ export class StockTable extends Component {
 const mapStateToProps = (state) => ({
   stock: state.stockReducer.stock,
 });
-
-{
-  /* const TableTemplate = (stock, deleteStock) => {
-  return (
-    <Fragment>
-      <h2>Stock in Market</h2>
-      <table className='table table-striped'>
-        <thead>
-          <tr>
-            <th>ID</th>
-
-            <th>Name</th>
-
-            <th>Code</th>
-
-            <th>Unit Price</th>
-
-            <th>Quantity</th>
-
-            <th>Description</th>
-
-            <th>Manufacturer</th>
-
-            <th>Supplier</th>
-
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {stock.map((item) => (
-            <tr key={item.id}>
-              <td>{item.id}</td>
-              <td>{item.productName}</td>
-              <td>{item.productCode}</td>
-              <td>{item.productPrice}</td>
-              <td>{item.quantity}</td>
-              <td>{item.description}</td>
-              <td>{item.manufacturerID}</td>
-              <td>{item.supplierID}</td>
-              <td>
-                <button
-                  onClick={() => deleteStock(item.id)}
-                  className='btn btn-danger btn-sm'
-                >
-                  DELETE
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </Fragment>
-  );
-};
-*/
-}
 
 export default connect(mapStateToProps, {
   getStock,
