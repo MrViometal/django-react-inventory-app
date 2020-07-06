@@ -54,7 +54,7 @@ export class StockTable extends Component {
     const total = Number(item.quantity) + Number(inputQuantity);
     if (inputQuantity)
       if (total > 10000) {
-        alert(`Quantity can't be more than 1000`);
+        alert(`Quantity can't be more than 10,000`);
       } else {
         if (
           confirm(
@@ -94,79 +94,21 @@ export class StockTable extends Component {
     console.log(this.state.quantity);
   };
 
+  manufacturerNameByID = (manufacturers, ID) => {
+    return manufacturers.find((person) => person.id === ID).manufacturerName;
+  };
+
+  supplierNameByID = (suppliers, ID) => {
+    return suppliers.find((person) => person.id === ID).supplierName;
+  };
+
+  snippetDescription = (str) => {
+    return str.length < 20 ? str : str.substr(0, 20) + '...';
+  };
+
   render() {
     const { stock, manufacturers, suppliers } = this.props;
-    let JoinedTable;
 
-    if (manufacturers.length && suppliers.length) {
-      JoinedTable = stock
-        .sort(function (a, b) {
-          return a.id - b.id;
-        })
-        .map((item) => (
-          <tr key={item.id}>
-            <td>{item.id} </td>
-            <td>{item.productName}</td>
-            <td>{item.productCode}</td>
-            <td>{item.quantity}</td>
-            <td>{`$${item.productPrice}`}</td>
-            <td>
-              {
-                manufacturers.find(
-                  (person) => person.id === item.manufacturerID,
-                ).manufacturerName
-              }
-            </td>
-            <td>
-              {
-                suppliers.find((person) => person.id === item.supplierID)
-                  .supplierName
-              }
-            </td>
-            <td>
-              {item.description.length < 20
-                ? item.description
-                : item.description.substr(0, 20) + '...'}
-            </td>
-            <td>
-              <div className='input-group'>
-                <input
-                  type='text'
-                  className='form-control'
-                  placeholder='Quantity'
-                  onChange={(e) => this.changeQuantity(e.target.value)}
-                  style={{ width: '50px' }}
-                />
-                <div className='input-group-append' id='button-addon4'>
-                  <button
-                    onClick={() => this.addStockHandler(item)}
-                    className='btn btn-success btn-sm'
-                    style={{ width: '50px' }}
-                  >
-                    <PlusSquareFill />
-                  </button>
-                  <button
-                    onClick={() => this.subtractStockHandler(item)}
-                    className='btn btn-info btn-sm'
-                    style={{ width: '50px' }}
-                  >
-                    <DashSquareFill />
-                  </button>
-                </div>
-              </div>
-            </td>
-
-            <td>
-              <button
-                onClick={() => this.deleteStockHandler(item.id)}
-                className='btn btn-danger btn-sm'
-              >
-                <TrashFill />
-              </button>
-            </td>
-          </tr>
-        ));
-    }
     return (
       <Fragment>
         <h2>Stock in Market</h2>
@@ -186,13 +128,63 @@ export class StockTable extends Component {
             </tr>
           </thead>
           <tbody>
-            {JoinedTable ? (
-              JoinedTable
-            ) : (
-              <tr>
-                <td>Loading...</td>
-              </tr>
-            )}
+            {stock
+              .sort(function (a, b) {
+                return a.id - b.id;
+              })
+              .map((item) => (
+                <tr key={item.id}>
+                  <td>{item.id} </td>
+                  <td>{item.productName}</td>
+                  <td>{item.productCode}</td>
+                  <td>{item.quantity}</td>
+                  <td>{`$${item.productPrice}`}</td>
+                  <td>
+                    {this.manufacturerNameByID(
+                      manufacturers,
+                      item.manufacturerID,
+                    )}
+                  </td>
+                  <td>{this.supplierNameByID(suppliers, item.supplierID)}</td>
+                  <td>{this.snippetDescription(item.description)}</td>
+                  <td>
+                    <div className='input-group'>
+                      <input
+                        type='text'
+                        className='form-control'
+                        placeholder='Quantity'
+                        onChange={(e) => this.changeQuantity(e.target.value)}
+                        style={{ width: '50px' }}
+                      />
+                      <div className='input-group-append' id='button-addon4'>
+                        <button
+                          onClick={() => this.addStockHandler(item)}
+                          className='btn btn-success btn-sm'
+                          style={{ width: '50px' }}
+                        >
+                          <PlusSquareFill />
+                        </button>
+                        <button
+                          onClick={() => this.subtractStockHandler(item)}
+                          className='btn btn-info btn-sm'
+                          style={{ width: '50px' }}
+                        >
+                          <DashSquareFill />
+                        </button>
+                      </div>
+                    </div>
+                  </td>
+
+                  <td>
+                    <button
+                      onClick={() => this.deleteStockHandler(item.id)}
+                      className='btn btn-danger btn-sm'
+                    >
+                      <TrashFill />
+                    </button>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </Fragment>
