@@ -61,6 +61,3 @@ export const deleteStock = (id) => (dispatch) => {
 const getProductsURL = () => '/api/products/';
 const deleteProductsURL = (id) => `/api/products/${id}/`;
 const updateProductsURL = (id) => `/api/products/${id}/`;
-
-const manufacturersURL = '/api/manufacturers/';
-const suppliersURL = '/api/suppliers/';
