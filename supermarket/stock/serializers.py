@@ -1,28 +1,35 @@
 from rest_framework import serializers
 from stock.models import Product, Manufacturer, Supplier
 
-# Product Serializer
 
 
-class ProductSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Product
-        fields = '__all__'
-
-
-# Product Serializer
+# Manufacturer Serializer
 
 
 class ManufacturerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Manufacturer
-        fields = '__all__'
+        fields = ('manufacturerName', 'manufacturerCode')
 
 
-# Product Serializer
+# Supplier Serializer
 
 
 class SupplierSerializer(serializers.ModelSerializer):
     class Meta:
         model = Supplier
-        fields = '__all__'
+        fields = ('supplierName', 'supplierCode')
+
+
+# Product Serializer
+
+
+class ProductSerializer(serializers.ModelSerializer):
+    manufacturer = ManufacturerSerializer(read_only=True)
+    supplier = SupplierSerializer(read_only=True)
+    class Meta:
+        model = Product
+        fields = ('id', 'productName', 'productCode', 'quantity','productPrice', 'description', 'manufacturer', 'supplier')
+
+
+

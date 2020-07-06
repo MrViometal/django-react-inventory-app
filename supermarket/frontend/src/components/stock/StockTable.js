@@ -37,8 +37,8 @@ export class StockTable extends Component {
   };
 
   componentDidMount() {
-    this.props.getManufacturers();
-    this.props.getSuppliers();
+    // this.props.getManufacturers();
+    // this.props.getSuppliers();
     this.props.getStock();
   }
 
@@ -94,20 +94,16 @@ export class StockTable extends Component {
     console.log(this.state.quantity);
   };
 
-  manufacturerNameByID = (manufacturers, ID) => {
-    return manufacturers.find((person) => person.id === ID).manufacturerName;
-  };
-
-  supplierNameByID = (suppliers, ID) => {
-    return suppliers.find((person) => person.id === ID).supplierName;
-  };
-
   snippetDescription = (str) => {
     return str.length < 20 ? str : str.substr(0, 20) + '...';
   };
 
+  sortFunc = (a, b) => {
+    return a.id - b.id;
+  };
+
   render() {
-    const { stock, manufacturers, suppliers } = this.props;
+    const { stock } = this.props;
 
     return (
       <Fragment>
@@ -128,63 +124,55 @@ export class StockTable extends Component {
             </tr>
           </thead>
           <tbody>
-            {stock
-              .sort(function (a, b) {
-                return a.id - b.id;
-              })
-              .map((item) => (
-                <tr key={item.id}>
-                  <td>{item.id} </td>
-                  <td>{item.productName}</td>
-                  <td>{item.productCode}</td>
-                  <td>{item.quantity}</td>
-                  <td>{`$${item.productPrice}`}</td>
-                  <td>
-                    {this.manufacturerNameByID(
-                      manufacturers,
-                      item.manufacturerID,
-                    )}
-                  </td>
-                  <td>{this.supplierNameByID(suppliers, item.supplierID)}</td>
-                  <td>{this.snippetDescription(item.description)}</td>
-                  <td>
-                    <div className='input-group'>
-                      <input
-                        type='text'
-                        className='form-control'
-                        placeholder='Quantity'
-                        onChange={(e) => this.changeQuantity(e.target.value)}
-                        style={{ width: '50px' }}
-                      />
-                      <div className='input-group-append' id='button-addon4'>
-                        <button
-                          onClick={() => this.addStockHandler(item)}
-                          className='btn btn-success btn-sm'
-                          style={{ width: '50px' }}
-                        >
-                          <PlusSquareFill />
-                        </button>
-                        <button
-                          onClick={() => this.subtractStockHandler(item)}
-                          className='btn btn-info btn-sm'
-                          style={{ width: '50px' }}
-                        >
-                          <DashSquareFill />
-                        </button>
-                      </div>
-                    </div>
-                  </td>
+            {stock.sort(this.sortFunc).map((item) => (
+              <tr key={item.id}>
+                <td>{item.id} </td>
+                <td>{item.productName}</td>
+                <td>{item.productCode}</td>
+                <td>{item.quantity}</td>
+                <td>{`$${item.productPrice}`}</td>
+                <td>{item.manufacturer.manufacturerName}</td>
+                <td>{item.supplier.supplierName}</td>
 
-                  <td>
-                    <button
-                      onClick={() => this.deleteStockHandler(item.id)}
-                      className='btn btn-danger btn-sm'
-                    >
-                      <TrashFill />
-                    </button>
-                  </td>
-                </tr>
-              ))}
+                <td>{this.snippetDescription(item.description)}</td>
+                <td>
+                  <div className='input-group'>
+                    <input
+                      type='text'
+                      className='form-control'
+                      placeholder='Quantity'
+                      onChange={(e) => this.changeQuantity(e.target.value)}
+                      style={{ width: '50px' }}
+                    />
+                    <div className='input-group-append' id='button-addon4'>
+                      <button
+                        onClick={() => this.addStockHandler(item)}
+                        className='btn btn-success btn-sm'
+                        style={{ width: '50px' }}
+                      >
+                        <PlusSquareFill />
+                      </button>
+                      <button
+                        onClick={() => this.subtractStockHandler(item)}
+                        className='btn btn-info btn-sm'
+                        style={{ width: '50px' }}
+                      >
+                        <DashSquareFill />
+                      </button>
+                    </div>
+                  </div>
+                </td>
+
+                <td>
+                  <button
+                    onClick={() => this.deleteStockHandler(item.id)}
+                    className='btn btn-danger btn-sm'
+                  >
+                    <TrashFill />
+                  </button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </Fragment>
@@ -194,18 +182,28 @@ export class StockTable extends Component {
 
 const mapStateToProps = (state) => ({
   stock: state.stockReducer.stock,
-  manufacturers: state.manufacturersReducer.manufacturers,
-  suppliers: state.suppliersReducer.suppliers,
+  // manufacturers: state.manufacturersReducer.manufacturers,
+  // suppliers: state.suppliersReducer.suppliers,
 });
 
 export default connect(mapStateToProps, {
   getStock,
-  getManufacturers,
-  getSuppliers,
+  // getManufacturers,
+  // getSuppliers,
   deleteStock,
   addStock,
   subtractStock,
 })(StockTable);
+
+//! ****************************** Trash **************************************
+
+// manufacturerNameByID = (manufacturers, ID) => {
+//   return manufacturers.find((person) => person.id === ID).manufacturerName;
+// };
+
+// supplierNameByID = (suppliers, ID) => {
+//   return suppliers.find((person) => person.id === ID).supplierName;
+// };
 
 {
   /* {stock

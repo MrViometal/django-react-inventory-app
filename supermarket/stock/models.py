@@ -10,10 +10,25 @@ class Manufacturer(models.Model):
     manufacturerCode = models.CharField(max_length=6, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        managed = True
+        db_table = 'manufacturers'
+
+    def __str__(self):
+        return self.manufacturerName
+        
+
 class Supplier(models.Model):
     supplierName = models.CharField(max_length=100)
     supplierCode = models.CharField(max_length=6, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    class Meta:
+        managed = True
+        db_table = 'suppliers'
+    
+
+    def __str__(self):
+        return self.supplierName
 
 
 class Product(models.Model):
@@ -24,8 +39,15 @@ class Product(models.Model):
     # no more thant 9999 units
     quantity = models.IntegerField(validators=[MaxValueValidator(10000), MinValueValidator(0)])
     description = models.CharField(max_length=600, blank=True)
-    manufacturerID = models.ForeignKey(Manufacturer, on_delete=models.CASCADE)
-    supplierID = models.ForeignKey(Supplier, on_delete=models.CASCADE)
+    manufacturer = models.ForeignKey(Manufacturer, on_delete=models.CASCADE)
+    supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        managed = True
+        db_table = 'products'
+
+    def __str__(self):
+        return self.productName
 
  
