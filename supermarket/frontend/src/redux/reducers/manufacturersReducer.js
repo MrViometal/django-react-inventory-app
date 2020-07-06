@@ -1,4 +1,4 @@
-import { GET_MANUFACTURER } from '../actions/types';
+import { GET_MANUFACTURERS } from '../actions/types';
 
 const initialState = {
   manufacturers: [],
@@ -6,7 +6,7 @@ const initialState = {
 
 function ManufacturersReducer(state = initialState, action) {
   switch (action.type) {
-    case GET_MANUFACTURER:
+    case GET_MANUFACTURERS:
       return {
         ...state,
         manufacturers: action.payload,

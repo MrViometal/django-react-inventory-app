@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { GET_MANUFACTURER } from './types';
+import { GET_MANUFACTURERS } from './types';
 
 //GET_STOCK
 export const getManufacturers = () => (dispatch) => {
@@ -8,7 +8,7 @@ export const getManufacturers = () => (dispatch) => {
     .get(getManufacturersURL)
     .then((res) => {
       dispatch({
-        type: GET_MANUFACTURER,
+        type: GET_MANUFACTURERS,
         payload: res.data,
       });
     })
