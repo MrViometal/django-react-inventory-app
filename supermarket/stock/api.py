@@ -11,6 +11,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     ]
     serializer_class = ProductSerializer
 
+
 # Manufacturer ViewSet
 
 class ManufacturerViewSet(viewsets.ModelViewSet):

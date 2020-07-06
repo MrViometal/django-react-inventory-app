@@ -18,7 +18,7 @@ import {
 
 export class StockTable extends Component {
   state = {
-    quantity: 0,
+    inputQuantity: 0,
   };
   static propTypes = {
     stock: PropTypes.array.isRequired,
@@ -50,8 +50,8 @@ export class StockTable extends Component {
   };
 
   addStockHandler = (item) => {
-    const { quantity: inputQuantity } = this.state;
-    const total = Number(item.quantity) + Number(inputQuantity);
+    const { inputQuantity } = this.state;
+    const total = Number(item.product_quantity) + Number(inputQuantity);
     if (inputQuantity)
       if (total > 10000) {
         alert(`Quantity can't be more than 10,000`);
@@ -63,15 +63,16 @@ export class StockTable extends Component {
         ) {
           this.props.addStock(item.id, {
             ...item,
-            quantity: item.quantity + Number(inputQuantity),
+            product_quantity: item.product_quantity + Number(inputQuantity),
           });
         }
       }
   };
 
   subtractStockHandler = (item) => {
-    const { quantity: inputQuantity } = this.state;
-    const total = Number(item.quantity) - Number(inputQuantity);
+    console.log(item);
+    const { inputQuantity } = this.state;
+    const total = Number(item.product_quantity) - Number(inputQuantity);
     if (inputQuantity)
       if (total < 0) {
         alert(`Quantity can't be less than 0`);
@@ -83,15 +84,15 @@ export class StockTable extends Component {
         ) {
           this.props.subtractStock(item.id, {
             ...item,
-            quantity: item.quantity - Number(inputQuantity),
+            product_quantity: item.product_quantity - Number(inputQuantity),
           });
         }
       }
   };
 
   changeQuantity = (value) => {
-    this.setState({ quantity: value });
-    console.log(this.state.quantity);
+    this.setState({ inputQuantity: value });
+    console.log(this.state.inputQuantity);
   };
 
   snippetDescription = (str) => {
@@ -127,14 +128,14 @@ export class StockTable extends Component {
             {stock.sort(this.sortFunc).map((item) => (
               <tr key={item.id}>
                 <td>{item.id} </td>
-                <td>{item.productName}</td>
-                <td>{item.productCode}</td>
-                <td>{item.quantity}</td>
-                <td>{`$${item.productPrice}`}</td>
-                <td>{item.manufacturer.manufacturerName}</td>
-                <td>{item.supplier.supplierName}</td>
+                <td>{item.product_name}</td>
+                <td>{item.product_code}</td>
+                <td>{item.product_quantity}</td>
+                <td>{`$${item.product_price}`}</td>
+                <td>{item.manufacturer_name}</td>
+                <td>{item.supplier_name}</td>
 
-                <td>{this.snippetDescription(item.description)}</td>
+                <td>{this.snippetDescription(item.product_description)}</td>
                 <td>
                   <div className='input-group'>
                     <input
