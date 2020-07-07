@@ -7,6 +7,10 @@ import {
   addStock,
   subtractStock,
 } from '../../redux/actions/stockActions';
+import {
+  positiveTransaction,
+  negativeTransaction,
+} from '../../redux/actions/transactionsActions';
 
 import {
   TrashFill,
@@ -26,6 +30,10 @@ export class StockTable extends Component {
     deleteProduct: PropTypes.func.isRequired,
     addStock: PropTypes.func.isRequired,
     subtractStock: PropTypes.func.isRequired,
+
+    // Transactions methods
+    positiveTransaction: PropTypes.func.isRequired,
+    negativeTransaction: PropTypes.func.isRequired,
   };
 
   componentDidMount() {
@@ -55,6 +63,7 @@ export class StockTable extends Component {
             ...item,
             product_quantity: item.product_quantity + Number(inputQuantity),
           });
+          this.props.positiveTransaction(item.id, Number(inputQuantity));
         }
       }
   };
@@ -75,6 +84,7 @@ export class StockTable extends Component {
             ...item,
             product_quantity: item.product_quantity - Number(inputQuantity),
           });
+          this.props.negativeTransaction(item.id, Number(inputQuantity));
         }
       }
   };
@@ -177,4 +187,6 @@ export default connect(mapStateToProps, {
   deleteProduct,
   addStock,
   subtractStock,
+  positiveTransaction,
+  negativeTransaction,
 })(StockTable);

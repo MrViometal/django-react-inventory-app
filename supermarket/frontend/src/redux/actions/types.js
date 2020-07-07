@@ -12,3 +12,7 @@ export const GET_MANUFACTURERS = 'GET_MANUFACTURERS';
 
 // Suppliers Actions
 export const GET_SUPPLIERS = 'GET_SUPPLIERS';
+
+//Transactions Actions
+export const POSITIVE_TRANSACTION = 'POSITIVE_TRANSACTION';
+export const NEGATIVE_TRANSACTION = 'NEGATIVE_TRANSACTION';
