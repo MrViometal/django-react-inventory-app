@@ -64,7 +64,9 @@ class Transaction(models.Model):
         choices=TYPES_OF_TRANSACTIONS,
     )
     transaction_amount = models.IntegerField()
-    transaction_product = models.ForeignKey(Product, on_delete=models.DO_NOTHING)
+    transaction_product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    # CASCADE will delete related transactions when product is deleted
+    # DO_NOTHING will not allow deletion of product that has transactions
 
     class Meta:
         managed = True
