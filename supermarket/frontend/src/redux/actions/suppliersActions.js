@@ -2,6 +2,8 @@ import axios from 'axios';
 
 import { GET_SUPPLIERS, ADD_SUPPLIERS, DELETE_SUPPLIERS } from './types';
 
+import { getError } from './helpers/errorsActions';
+
 //GET_SUPPLIERS
 export const getSuppliers = () => (dispatch) => {
   axios
@@ -12,7 +14,7 @@ export const getSuppliers = () => (dispatch) => {
         payload: res.data,
       });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => getError(err, dispatch));
 };
 
 //ADD_MANUFACTURERS
@@ -25,7 +27,7 @@ export const addSupplier = (newObj) => (dispatch) => {
         payload: res.data,
       });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => getError(err, dispatch));
 };
 
 //DELETE_MANUFACTURERS
@@ -38,7 +40,7 @@ export const deleteSupplier = (id) => (dispatch) => {
         payload: id,
       });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => getError(err, dispatch));
 };
 
 const getPostSuppliersURL = () => `/api/suppliers/`;

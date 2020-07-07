@@ -6,6 +6,8 @@ import {
   NEGATIVE_TRANSACTION,
 } from './types';
 
+import { getError } from './helpers/errorsActions';
+
 // GET_TRANSACTIONS
 export const getTransactions = () => (dispatch) => {
   axios
@@ -16,7 +18,7 @@ export const getTransactions = () => (dispatch) => {
         payload: res.data,
       });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => getError(err, dispatch));
 };
 
 // POSITIVE_TRANSACTION
@@ -34,7 +36,7 @@ export const positiveTransaction = (id, amount) => (dispatch) => {
         payload: res.data,
       });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => getError(err, dispatch));
 };
 
 // NEGATIVE_TRANSACTION
@@ -52,7 +54,7 @@ export const negativeTransaction = (id, amount) => (dispatch) => {
         payload: res.data,
       });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => getError(err, dispatch));
 };
 
 // URLS

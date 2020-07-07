@@ -17,28 +17,28 @@ export class Header extends Component {
           <span className='navbar-toggler-icon'></span>
         </button>
         <div className='collapse navbar-collapse' id='navbarTogglerDemo01'>
-          <Link className='navbar-brand' exact to={'/'}>
+          <Link className='navbar-brand' to={'/'}>
             Supermarket Stock Manager
           </Link>
 
           <ul className='navbar-nav mr-auto mt-2 mt-lg-0'>
             <li className='nav-item'>
-              <Link className='nav-link' exact to={'/'}>
+              <Link className='nav-link' to={'/'}>
                 Products
               </Link>
             </li>
             <li className='nav-item'>
-              <Link className='nav-link' exact to={'/manufacturers'}>
+              <Link className='nav-link' to={'/manufacturers'}>
                 Manufacturers
               </Link>
             </li>
             <li className='nav-item'>
-              <Link className='nav-link' exact to={'/suppliers'}>
+              <Link className='nav-link' to={'/suppliers'}>
                 Suppliers
               </Link>
             </li>
             <li className='nav-item'>
-              <Link className='nav-link' exact to={'/transactions'}>
+              <Link className='nav-link' to={'/transactions'}>
                 Transactions
               </Link>
             </li>
