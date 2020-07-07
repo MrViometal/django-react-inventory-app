@@ -8,18 +8,13 @@ const initialState = {
   manufacturer_code: '',
 };
 
-export class StockForm extends Component {
+export class ManufacturersForm extends Component {
   state = initialState;
 
   static propTypes = {
     // Manufacturers methods
     addManufacturer: PropTypes.func.isRequired,
   };
-
-  //   componentDidMount() {
-  //     this.props.getManufacturers();
-  //     this.props.getSuppliers();
-  //   }
 
   onChange = (e) => {
     const { name, value } = e.target;
@@ -72,11 +67,6 @@ export class StockForm extends Component {
   }
 }
 
-// const mapStateToProps = (state) => ({
-//   manufacturers: state.manufacturersReducer.manufacturers,
-//   suppliers: state.suppliersReducer.suppliers,
-// });
-
 export default connect(null, {
   addManufacturer,
-})(StockForm);
+})(ManufacturersForm);

@@ -6,11 +6,7 @@ import {
   deleteManufacturer,
 } from '../../redux/actions/manufacturersActions';
 
-import {
-  TrashFill,
-  //   PlusSquareFill,
-  //   DashSquareFill,
-} from 'react-bootstrap-icons';
+import { TrashFill } from 'react-bootstrap-icons';
 
 export class ManufacturersTable extends Component {
   static propTypes = {
@@ -24,7 +20,7 @@ export class ManufacturersTable extends Component {
     this.props.getManufacturers();
   }
 
-  deleteProductHandler = (id) => {
+  deleteManufacturerHandler = (id) => {
     {
       if (confirm('Are you sure you want to delete this?'))
         this.props.deleteManufacturer(id);
@@ -66,7 +62,7 @@ export class ManufacturersTable extends Component {
 
                   <td>
                     <button
-                      onClick={() => this.deleteProductHandler(item.id)}
+                      onClick={() => this.deleteManufacturerHandler(item.id)}
                       className='btn btn-danger btn-sm'
                     >
                       <TrashFill />

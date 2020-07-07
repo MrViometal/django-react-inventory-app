@@ -35,7 +35,6 @@ function StockReducer(state = initialState, action) {
 
     case ADD_STOCK:
       console.log('addStock');
-
       return {
         ...state,
         stock: [
