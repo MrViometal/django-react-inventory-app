@@ -63,7 +63,7 @@ class Transaction(models.Model):
         max_length=3,
         choices=TYPES_OF_TRANSACTIONS,
     )
-    transaction_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    transaction_amount = models.IntegerField()
     transaction_product = models.ForeignKey(Product, on_delete=models.DO_NOTHING)
 
     class Meta:
