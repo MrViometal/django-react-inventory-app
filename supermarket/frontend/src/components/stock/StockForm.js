@@ -46,6 +46,11 @@ export class StockForm extends Component {
     this.setState(initialState);
   };
 
+  filterFunc = (item) => {
+    return (
+      item.manufacturer_code !== 'noCode' && item.supplier_code !== 'noCode'
+    );
+  };
   render() {
     const {
       product_name,
@@ -122,7 +127,7 @@ export class StockForm extends Component {
                 id='product_manufacturer'
                 onChange={this.onChange}
               >
-                {manufacturers.map((person) => (
+                {manufacturers.filter(this.filterFunc).map((person) => (
                   <option key={person.id} value={person.id}>
                     {person.manufacturer_name}
                   </option>
@@ -140,7 +145,7 @@ export class StockForm extends Component {
                 id='product_supplier'
                 onChange={this.onChange}
               >
-                {suppliers.map((person) => (
+                {suppliers.filter(this.filterFunc).map((person) => (
                   <option key={person.id} value={person.id}>
                     {person.supplier_name}
                   </option>

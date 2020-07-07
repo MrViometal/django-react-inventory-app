@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 export class Header extends Component {
   render() {
     return (
-      <nav className='navbar navbar-expand-sm navbar-dark bg-dark'>
+      <nav className='navbar navbar-expand-sm navbar-dark bg-dark sticky-top'>
         <button
           className='navbar-toggler'
           type='button'
