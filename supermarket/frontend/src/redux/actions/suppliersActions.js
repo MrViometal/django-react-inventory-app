@@ -1,7 +1,8 @@
 import axios from 'axios';
 
-import { GET_SUPPLIERS, ADD_SUPPLIERS, DELETE_SUPPLIERS } from './types';
+import { GET_SUPPLIERS, ADD_SUPPLIER, DELETE_SUPPLIER } from './types';
 
+import { createMessage } from './helpers/messagesActions';
 import { getError } from './helpers/errorsActions';
 
 //GET_SUPPLIERS
@@ -17,26 +18,28 @@ export const getSuppliers = () => (dispatch) => {
     .catch((err) => getError(err, dispatch));
 };
 
-//ADD_MANUFACTURERS
+//ADD_SUPPLIERS
 export const addSupplier = (newObj) => (dispatch) => {
   axios
     .post(getPostSuppliersURL(), newObj)
     .then((res) => {
+      dispatch(createMessage({ addSupplier: 'Supplier added!' }));
       dispatch({
-        type: ADD_SUPPLIERS,
+        type: ADD_SUPPLIER,
         payload: res.data,
       });
     })
     .catch((err) => getError(err, dispatch));
 };
 
-//DELETE_MANUFACTURERS
+//DELETE_SUPPLIERS
 export const deleteSupplier = (id) => (dispatch) => {
   axios
     .delete(deleteUpdateSuppliersURL(id))
     .then((res) => {
+      dispatch(createMessage({ deleteSupplier: 'Supplier is deleted!' }));
       dispatch({
-        type: DELETE_SUPPLIERS,
+        type: DELETE_SUPPLIER,
         payload: id,
       });
     })

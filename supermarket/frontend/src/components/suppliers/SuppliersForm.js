@@ -35,28 +35,30 @@ export class SupplierForm extends Component {
       <div className='card card-body mt-4 mb-4'>
         <h2>Add Supplier</h2>
         <form onSubmit={this.onSubmit}>
-          <div className='form-group'>
-            <label>Supplier Name</label>
-            <input
-              className='form-control'
-              type='text'
-              name='supplier_name'
-              onChange={this.onChange}
-              value={supplier_name}
-            />
-          </div>
-          <div className='form-group'>
-            <label>Supplier Code</label>
-            <input
-              className='form-control'
-              type='text'
-              name='supplier_code'
-              onChange={this.onChange}
-              value={supplier_code}
-            />
+          <div className='row'>
+            <div className='col'>
+              <input
+                placeholder='Supplier Name'
+                className='form-control'
+                type='text'
+                name='supplier_name'
+                onChange={this.onChange}
+                value={supplier_name}
+              />
+            </div>
+            <div className='col'>
+              <input
+                placeholder='Supplier Code'
+                className='form-control'
+                type='text'
+                name='supplier_code'
+                onChange={this.onChange}
+                value={supplier_code}
+              />
+            </div>
           </div>
 
-          <div className='form-group'>
+          <div className='form-group mt-3'>
             <button type='submit' className=' btn btn-primary'>
               Submit
             </button>

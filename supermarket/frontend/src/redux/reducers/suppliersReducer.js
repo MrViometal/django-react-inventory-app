@@ -1,8 +1,4 @@
-import {
-  GET_SUPPLIERS,
-  ADD_SUPPLIERS,
-  DELETE_SUPPLIERS,
-} from '../actions/types';
+import { GET_SUPPLIERS, ADD_SUPPLIER, DELETE_SUPPLIER } from '../actions/types';
 
 const initialState = {
   suppliers: [],
@@ -11,20 +7,21 @@ const initialState = {
 function SuppliersReducer(state = initialState, action) {
   switch (action.type) {
     case GET_SUPPLIERS:
+      // console.log('getSuppliers');
       return {
         ...state,
         suppliers: action.payload,
       };
 
-    case ADD_SUPPLIERS:
-      console.log('addManufacturer');
+    case ADD_SUPPLIER:
+      // console.log('addSupplier');
       return {
         ...state,
         suppliers: [...state.suppliers, action.payload],
       };
 
-    case DELETE_SUPPLIERS:
-      console.log('deleteManufacturer');
+    case DELETE_SUPPLIER:
+      // console.log('deleteSupplier');
       return {
         ...state,
         suppliers: state.suppliers.filter(

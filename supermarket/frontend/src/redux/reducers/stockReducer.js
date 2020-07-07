@@ -13,28 +13,28 @@ const initialState = {
 function StockReducer(state = initialState, action) {
   switch (action.type) {
     case GET_PRODUCTS:
-      console.log('getProducts');
+      // console.log('getProducts');
       return {
         ...state,
         stock: action.payload,
       };
 
     case ADD_PRODUCT:
-      console.log('addProduct');
+      // console.log('addProduct');
       return {
         ...state,
         stock: [...state.stock, action.payload],
       };
 
     case DELETE_PRODUCT:
-      console.log('deleteProduct');
+      // console.log('deleteProduct');
       return {
         ...state,
         stock: state.stock.filter((stock) => stock.id !== action.payload),
       };
 
     case ADD_STOCK:
-      console.log('addStock');
+      // console.log('addStock');
       return {
         ...state,
         stock: [
@@ -44,7 +44,7 @@ function StockReducer(state = initialState, action) {
       };
 
     case SUBTRACT_STOCK:
-      console.log('subtractStock');
+      // console.log('subtractStock');
       return {
         ...state,
         stock: [

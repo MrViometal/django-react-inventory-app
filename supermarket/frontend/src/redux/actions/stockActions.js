@@ -29,7 +29,7 @@ export const addProduct = (newObj) => (dispatch) => {
   axios
     .post(getPostProductsURL(), newObj)
     .then((res) => {
-      dispatch(createMessage({ addProduct: 'Product is added!' }));
+      dispatch(createMessage({ addProduct: 'Product added!' }));
       dispatch({
         type: ADD_PRODUCT,
         payload: res.data,

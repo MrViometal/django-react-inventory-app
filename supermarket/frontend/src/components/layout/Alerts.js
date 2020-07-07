@@ -32,7 +32,19 @@ export class Alerts extends Component {
           supplier_code,
         },
       },
-      message: { addProduct, deleteProduct, addStock, subtractStock },
+      message: {
+        addProduct,
+        deleteProduct,
+
+        addStock,
+        subtractStock,
+
+        addManufacturer,
+        deleteManufacturer,
+
+        addSupplier,
+        deleteSupplier,
+      },
     } = this.props;
 
     if (error !== prevProps.error) {
@@ -72,6 +84,14 @@ export class Alerts extends Component {
       if (addStock) alert.success(addStock);
 
       if (subtractStock) alert.success(subtractStock);
+
+      if (addManufacturer) alert.success(addManufacturer);
+
+      if (deleteManufacturer) alert.success(deleteManufacturer);
+
+      if (addSupplier) alert.success(addSupplier);
+
+      if (deleteSupplier) alert.success(deleteSupplier);
     }
   }
 
