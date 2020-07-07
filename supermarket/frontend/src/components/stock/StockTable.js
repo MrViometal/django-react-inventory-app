@@ -99,6 +99,10 @@ export class StockTable extends Component {
     return a.id - b.id;
   };
 
+  filterFunc = (item) => {
+    return item.product_code !== 'noCode';
+  };
+
   render() {
     const { stock } = this.props;
 
@@ -121,54 +125,57 @@ export class StockTable extends Component {
             </tr>
           </thead>
           <tbody>
-            {stock.sort(this.sortFunc).map((item) => (
-              <tr key={item.id}>
-                <td>{item.id} </td>
-                <td>{item.product_name}</td>
-                <td>{item.product_code}</td>
-                <td>{item.product_quantity}</td>
-                <td>{`$${item.product_price}`}</td>
-                <td>{item.manufacturer_name}</td>
-                <td>{item.supplier_name}</td>
+            {stock
+              .sort(this.sortFunc)
+              .filter(this.filterFunc)
+              .map((item) => (
+                <tr key={item.id}>
+                  <td>{item.id} </td>
+                  <td>{item.product_name}</td>
+                  <td>{item.product_code}</td>
+                  <td>{item.product_quantity}</td>
+                  <td>{`$${item.product_price}`}</td>
+                  <td>{item.manufacturer_name}</td>
+                  <td>{item.supplier_name}</td>
 
-                <td>{this.snippetDescription(item.product_description)}</td>
-                <td>
-                  <div className='input-group'>
-                    <input
-                      type='text'
-                      className='form-control'
-                      placeholder='Quantity'
-                      onChange={(e) => this.changeQuantity(e.target.value)}
-                      style={{ width: '50px' }}
-                    />
-                    <div className='input-group-append' id='button-addon4'>
-                      <button
-                        onClick={() => this.addStockHandler(item)}
-                        className='btn btn-success btn-sm'
+                  <td>{this.snippetDescription(item.product_description)}</td>
+                  <td>
+                    <div className='input-group'>
+                      <input
+                        type='text'
+                        className='form-control'
+                        placeholder='Quantity'
+                        onChange={(e) => this.changeQuantity(e.target.value)}
                         style={{ width: '50px' }}
-                      >
-                        <PlusSquareFill />
-                      </button>
-                      <button
-                        onClick={() => this.subtractStockHandler(item)}
-                        className='btn btn-info btn-sm'
-                        style={{ width: '50px' }}
-                      >
-                        <DashSquareFill />
-                      </button>
+                      />
+                      <div className='input-group-append' id='button-addon4'>
+                        <button
+                          onClick={() => this.addStockHandler(item)}
+                          className='btn btn-success btn-sm'
+                          style={{ width: '50px' }}
+                        >
+                          <PlusSquareFill />
+                        </button>
+                        <button
+                          onClick={() => this.subtractStockHandler(item)}
+                          className='btn btn-info btn-sm'
+                          style={{ width: '50px' }}
+                        >
+                          <DashSquareFill />
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                </td>
-                <td>
-                  <button
-                    onClick={() => this.deleteProductHandler(item.id)}
-                    className='btn btn-danger btn-sm'
-                  >
-                    <TrashFill />
-                  </button>
-                </td>
-              </tr>
-            ))}
+                  </td>
+                  <td>
+                    <button
+                      onClick={() => this.deleteProductHandler(item.id)}
+                      className='btn btn-danger btn-sm'
+                    >
+                      <TrashFill />
+                    </button>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </Fragment>
