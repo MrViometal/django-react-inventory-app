@@ -1,6 +1,7 @@
 import {
-  GET_STOCK,
-  DELETE_STOCK,
+  GET_PRODUCTS,
+  ADD_PRODUCT,
+  DELETE_PRODUCT,
   ADD_STOCK,
   SUBTRACT_STOCK,
 } from '../actions/types';
@@ -11,15 +12,29 @@ const initialState = {
 
 function StockReducer(state = initialState, action) {
   switch (action.type) {
-    case GET_STOCK:
-      console.log('get');
+    case GET_PRODUCTS:
+      console.log('getProducts');
       return {
         ...state,
         stock: action.payload,
       };
 
+    case ADD_PRODUCT:
+      console.log('addProduct');
+      return {
+        ...state,
+        stock: [...state.stock, action.payload],
+      };
+
+    case DELETE_PRODUCT:
+      console.log('deleteProduct');
+      return {
+        ...state,
+        stock: state.stock.filter((stock) => stock.id !== action.payload),
+      };
+
     case ADD_STOCK:
-      console.log('add');
+      console.log('addStock');
 
       return {
         ...state,
@@ -30,20 +45,13 @@ function StockReducer(state = initialState, action) {
       };
 
     case SUBTRACT_STOCK:
-      console.log('subtract');
+      console.log('subtractStock');
       return {
         ...state,
         stock: [
           ...state.stock.filter((stock) => stock.id !== action.id),
           action.payload,
         ],
-      };
-
-    case DELETE_STOCK:
-      console.log('delete');
-      return {
-        ...state,
-        stock: state.stock.filter((stock) => stock.id !== action.payload),
       };
 
     default:

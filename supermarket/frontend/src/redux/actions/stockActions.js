@@ -1,15 +1,47 @@
 import axios from 'axios';
 
-import { GET_STOCK, DELETE_STOCK, ADD_STOCK, SUBTRACT_STOCK } from './types';
+import {
+  GET_PRODUCTS,
+  DELETE_PRODUCT,
+  ADD_STOCK,
+  SUBTRACT_STOCK,
+  ADD_PRODUCT,
+} from './types';
 
-//GET_STOCK
-export const getStock = () => (dispatch) => {
+//GET_PRODUCTS
+export const getProducts = () => (dispatch) => {
   axios
-    .get(getProductsURL())
+    .get(getPostProductsURL())
     .then((res) => {
       dispatch({
-        type: GET_STOCK,
+        type: GET_PRODUCTS,
         payload: res.data,
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
+//ADD_PRODUCT
+export const addProduct = (newObj) => (dispatch) => {
+  axios
+    .post(getPostProductsURL(), newObj)
+    .then((res) => {
+      dispatch({
+        type: ADD_PRODUCT,
+        payload: res.data,
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
+//DELETE_PRODUCT
+export const deleteProduct = (id) => (dispatch) => {
+  axios
+    .delete(deleteUpdateProductsURL(id))
+    .then((res) => {
+      dispatch({
+        type: DELETE_PRODUCT,
+        payload: id,
       });
     })
     .catch((err) => console.log(err));
@@ -18,7 +50,7 @@ export const getStock = () => (dispatch) => {
 //ADD_STOCK
 export const addStock = (id, newObj) => (dispatch) => {
   axios
-    .put(updateProductsURL(id), newObj)
+    .put(deleteUpdateProductsURL(id), newObj)
     .then((res) => {
       dispatch({
         type: ADD_STOCK,
@@ -32,7 +64,7 @@ export const addStock = (id, newObj) => (dispatch) => {
 //SUBTRACT_STOCK
 export const subtractStock = (id, newObj) => (dispatch) => {
   axios
-    .put(updateProductsURL(id), newObj)
+    .put(deleteUpdateProductsURL(id), newObj)
     .then((res) => {
       // console.log(updateProductsURL(id));
       dispatch({
@@ -44,20 +76,6 @@ export const subtractStock = (id, newObj) => (dispatch) => {
     .catch((err) => console.log(err));
 };
 
-//DELETE_STOCK
-export const deleteStock = (id) => (dispatch) => {
-  axios
-    .delete(deleteProductsURL(id))
-    .then((res) => {
-      dispatch({
-        type: DELETE_STOCK,
-        payload: id,
-      });
-    })
-    .catch((err) => console.log(err));
-};
-
 // URLS
-const getProductsURL = () => '/api/products/';
-const deleteProductsURL = (id) => `/api/products/${id}/`;
-const updateProductsURL = (id) => `/api/products/${id}/`;
+const getPostProductsURL = () => '/api/products/';
+const deleteUpdateProductsURL = (id) => `/api/products/${id}/`;

@@ -2,13 +2,11 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
-  getStock,
-  deleteStock,
+  getProducts,
+  deleteProduct,
   addStock,
   subtractStock,
 } from '../../redux/actions/stockActions';
-import { getManufacturers } from '../../redux/actions/manufacturersActions';
-import { getSuppliers } from '../../redux/actions/suppliersActions';
 
 import {
   TrashFill,
@@ -24,28 +22,20 @@ export class StockTable extends Component {
     stock: PropTypes.array.isRequired,
 
     // Stock methods
-    getStock: PropTypes.func.isRequired,
+    getProducts: PropTypes.func.isRequired,
+    deleteProduct: PropTypes.func.isRequired,
     addStock: PropTypes.func.isRequired,
     subtractStock: PropTypes.func.isRequired,
-    deleteStock: PropTypes.func.isRequired,
-
-    // Manufacturers methods
-    getManufacturers: PropTypes.func.isRequired,
-
-    // Suppliers methods
-    getSuppliers: PropTypes.func.isRequired,
   };
 
   componentDidMount() {
-    // this.props.getManufacturers();
-    // this.props.getSuppliers();
-    this.props.getStock();
+    this.props.getProducts();
   }
 
-  deleteStockHandler = (id) => {
+  deleteProductHandler = (id) => {
     {
       if (confirm('Are you sure you want to delete this?'))
-        this.props.deleteStock(id);
+        this.props.deleteProduct(id);
     }
   };
 
@@ -70,7 +60,6 @@ export class StockTable extends Component {
   };
 
   subtractStockHandler = (item) => {
-    console.log(item);
     const { inputQuantity } = this.state;
     const total = Number(item.product_quantity) - Number(inputQuantity);
     if (inputQuantity)
@@ -92,7 +81,6 @@ export class StockTable extends Component {
 
   changeQuantity = (value) => {
     this.setState({ inputQuantity: value });
-    console.log(this.state.inputQuantity);
   };
 
   snippetDescription = (str) => {
@@ -163,10 +151,9 @@ export class StockTable extends Component {
                     </div>
                   </div>
                 </td>
-
                 <td>
                   <button
-                    onClick={() => this.deleteStockHandler(item.id)}
+                    onClick={() => this.deleteProductHandler(item.id)}
                     className='btn btn-danger btn-sm'
                   >
                     <TrashFill />
@@ -183,89 +170,11 @@ export class StockTable extends Component {
 
 const mapStateToProps = (state) => ({
   stock: state.stockReducer.stock,
-  // manufacturers: state.manufacturersReducer.manufacturers,
-  // suppliers: state.suppliersReducer.suppliers,
 });
 
 export default connect(mapStateToProps, {
-  getStock,
-  // getManufacturers,
-  // getSuppliers,
-  deleteStock,
+  getProducts,
+  deleteProduct,
   addStock,
   subtractStock,
 })(StockTable);
-
-//! ****************************** Trash **************************************
-
-// manufacturerNameByID = (manufacturers, ID) => {
-//   return manufacturers.find((person) => person.id === ID).manufacturerName;
-// };
-
-// supplierNameByID = (suppliers, ID) => {
-//   return suppliers.find((person) => person.id === ID).supplierName;
-// };
-
-{
-  /* {stock
-              .sort(function (a, b) {
-                return a.id - b.id;
-              })
-              .map((item) => (
-                <tr key={item.id}>
-                  <td>{item.id} </td>
-                  <td>{item.productName}</td>
-                  <td>{item.productCode}</td>
-                  <td>{item.quantity}</td>
-                  <td>{`$${item.productPrice}`}</td>
-                  <td>{item.manufacturerID}</td>
-                  // {/* {console.log(
-                  //     manufacturers.find(
-                  //       (person) => person.id === item.manufacturerID,
-                  //     ).manufacturerName,
-                  //   )} 
-                  <td>{item.supplierID}</td>
-                  <td>
-                    {item.description.length < 20
-                      ? item.description
-                      : item.description.substr(0, 20) + '...'}
-                  </td>
-                  <td>
-                    <div className='input-group'>
-                      <input
-                        type='text'
-                        className='form-control'
-                        placeholder='Quantity'
-                        onChange={(e) => this.changeQuantity(e.target.value)}
-                        style={{ width: '50px' }}
-                      />
-                      <div className='input-group-append' id='button-addon4'>
-                        <button
-                          onClick={() => this.addStockHandler(item)}
-                          className='btn btn-success btn-sm'
-                          style={{ width: '50px' }}
-                        >
-                          <PlusSquareFill />
-                        </button>
-                        <button
-                          onClick={() => this.subtractStockHandler(item)}
-                          className='btn btn-info btn-sm'
-                          style={{ width: '50px' }}
-                        >
-                          <DashSquareFill />
-                        </button>
-                      </div>
-                    </div>
-                  </td>
-
-                  <td>
-                    <button
-                      onClick={() => this.deleteStockHandler(item.id)}
-                      className='btn btn-danger btn-sm'
-                    >
-                      <TrashFill />
-                    </button>
-                  </td>
-                </tr>
-              ))} */
-}

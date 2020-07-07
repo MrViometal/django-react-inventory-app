@@ -1,8 +1,11 @@
 // Stock Actions
-export const GET_STOCK = 'GET_STOCK';
 export const ADD_STOCK = 'ADD_STOCK';
 export const SUBTRACT_STOCK = 'SUBTRACT_STOCK';
-export const DELETE_STOCK = 'DELETE_STOCK';
+
+// Products Actions
+export const GET_PRODUCTS = 'GET_PRODUCTS';
+export const ADD_PRODUCT = 'ADD_PRODUCT';
+export const DELETE_PRODUCT = 'DELETE_STOCK';
 
 // Manufacturers Actions
 export const GET_MANUFACTURERS = 'GET_MANUFACTURERS';
