@@ -1,6 +1,23 @@
 import axios from 'axios';
 
-import { POSITIVE_TRANSACTION, NEGATIVE_TRANSACTION } from './types';
+import {
+  GET_TRANSACTIONS,
+  POSITIVE_TRANSACTION,
+  NEGATIVE_TRANSACTION,
+} from './types';
+
+// GET_TRANSACTIONS
+export const getTransactions = () => (dispatch) => {
+  axios
+    .get(getPostTransactionsURL())
+    .then((res) => {
+      dispatch({
+        type: GET_TRANSACTIONS,
+        payload: res.data,
+      });
+    })
+    .catch((err) => console.log(err));
+};
 
 // POSITIVE_TRANSACTION
 export const positiveTransaction = (id, amount) => (dispatch) => {
@@ -9,7 +26,6 @@ export const positiveTransaction = (id, amount) => (dispatch) => {
     transaction_amount: amount,
     transaction_type: 'POS',
   };
-  console.log({ newTransaction });
   axios
     .post(getPostTransactionsURL(), newTransaction)
     .then((res) => {
@@ -20,6 +36,7 @@ export const positiveTransaction = (id, amount) => (dispatch) => {
     })
     .catch((err) => console.log(err));
 };
+
 // NEGATIVE_TRANSACTION
 export const negativeTransaction = (id, amount) => (dispatch) => {
   const newTransaction = {
@@ -27,7 +44,6 @@ export const negativeTransaction = (id, amount) => (dispatch) => {
     transaction_amount: amount,
     transaction_type: 'NEG',
   };
-  console.log({ newTransaction });
   axios
     .post(getPostTransactionsURL(), newTransaction)
     .then((res) => {

@@ -66,7 +66,6 @@ export const subtractStock = (id, newObj) => (dispatch) => {
   axios
     .put(deleteUpdateProductsURL(id), newObj)
     .then((res) => {
-      // console.log(updateProductsURL(id));
       dispatch({
         type: SUBTRACT_STOCK,
         id: id,

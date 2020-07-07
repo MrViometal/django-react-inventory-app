@@ -24,13 +24,11 @@ export class StockTable extends Component {
   };
   static propTypes = {
     stock: PropTypes.array.isRequired,
-
     // Stock methods
     getProducts: PropTypes.func.isRequired,
     deleteProduct: PropTypes.func.isRequired,
     addStock: PropTypes.func.isRequired,
     subtractStock: PropTypes.func.isRequired,
-
     // Transactions methods
     positiveTransaction: PropTypes.func.isRequired,
     negativeTransaction: PropTypes.func.isRequired,
