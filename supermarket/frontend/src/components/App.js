@@ -19,7 +19,8 @@ class App extends Component {
       <Provider store={store}>
         <Fragment>
           <Switch>
-            <Route exact path='/' component={Products} />
+            <Route exact path='/products' component={Products} />
+            <Redirect from='/' exact to='/products' />
             <Route exact path='/manufacturers' component={Manufacturers} />
             <Route exact path='/suppliers' component={Suppliers} />
             <Route exact path='/transactions' component={Transactions} />
