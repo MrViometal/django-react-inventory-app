@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from stock.models import Product, Manufacturer, Supplier
+from stock.models import Product, Manufacturer, Supplier, Transaction
 
 
 
@@ -37,3 +37,18 @@ class ProductSerializer(serializers.ModelSerializer):
 
     def get_supplier_name(self, obj):
         return obj.product_supplier.supplier_name
+
+# Product Serializer
+
+
+class TransactionSerializer(serializers.ModelSerializer):
+    product_name = serializers.SerializerMethodField('get_product_name')
+
+    class Meta:
+        model = Transaction
+        fields = ['id', 'transaction_amount', 'transaction_product', 'transaction_type', 'product_name']
+
+  
+
+    def get_product_name(self, obj):
+        return obj.transaction_product.product_name

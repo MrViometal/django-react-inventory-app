@@ -1,6 +1,6 @@
-from stock.models import Product, Manufacturer , Supplier
 from rest_framework import viewsets, permissions 
-from .serializers import ProductSerializer, ManufacturerSerializer, SupplierSerializer
+from stock.models import Product, Manufacturer , Supplier, Transaction
+from .serializers import ProductSerializer, ManufacturerSerializer, SupplierSerializer, TransactionSerializer
 
 # Product ViewSet
 
@@ -10,6 +10,15 @@ class ProductViewSet(viewsets.ModelViewSet):
         permissions.AllowAny
     ]
     serializer_class = ProductSerializer
+
+# Transaction ViewSet
+
+class TransactionViewSet(viewsets.ModelViewSet):
+    queryset = Transaction.objects.all()
+    permission_classes = [
+        permissions.AllowAny
+    ]
+    serializer_class = TransactionSerializer
 
 
 # Manufacturer ViewSet
