@@ -104,7 +104,7 @@ export class TransactionsTable extends Component {
 
     return (
       <Fragment>
-        <h2>Transactions Records</h2>
+        <h2 className='mt-4'>Transactions Records</h2>
         <table className='table table-striped'>
           <thead>
             <tr>

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 export class Header extends Component {
   render() {
@@ -17,9 +18,30 @@ export class Header extends Component {
         </button>
         <div className='collapse navbar-collapse' id='navbarTogglerDemo01'>
           <a className='navbar-brand' href='#'>
-            Lead Manager
+            Supermarket Stock Manager
           </a>
-          {/* <ul className='navbar-nav mr-auto mt-2 mt-lg-0'></ul> */}
+          <ul className='navbar-nav mr-auto mt-2 mt-lg-0'>
+            <li className='nav-item'>
+              <Link className='nav-link' exact to={'/'}>
+                Products
+              </Link>
+            </li>
+            <li className='nav-item'>
+              <Link className='nav-link' exact to={'/manufacturers'}>
+                Manufacturers
+              </Link>
+            </li>
+            <li className='nav-item'>
+              <Link className='nav-link' exact to={'/suppliers'}>
+                Suppliers
+              </Link>
+            </li>
+            <li className='nav-item'>
+              <Link className='nav-link' exact to={'/transactions'}>
+                Transactions
+              </Link>
+            </li>
+          </ul>
         </div>
       </nav>
     );

@@ -40,7 +40,7 @@ export class SuppliersTable extends Component {
 
     return (
       <Fragment>
-        <h2>Suppliers</h2>
+        <h2 className='mt-4'>Suppliers</h2>
         <table className='table table-striped'>
           <thead>
             <tr>

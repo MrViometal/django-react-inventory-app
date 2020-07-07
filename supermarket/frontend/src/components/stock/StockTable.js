@@ -108,7 +108,7 @@ export class StockTable extends Component {
 
     return (
       <Fragment>
-        <h2>Stock in Market</h2>
+        <h2 className='mt-4'>Stock in Market</h2>
         <table className='table table-striped'>
           <thead>
             <tr>
