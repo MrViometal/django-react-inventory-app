@@ -41,8 +41,8 @@ class Product(models.Model):
     # no more thant 9999 units
     product_quantity = models.IntegerField(validators=[MaxValueValidator(10000), MinValueValidator(0)])
     product_description = models.CharField(max_length=600, blank=True)
-    product_supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
-    product_manufacturer = models.ForeignKey(Manufacturer, on_delete=models.CASCADE)
+    product_supplier = models.ForeignKey(Supplier, on_delete=models.SET_DEFAULT, default=1)
+    product_manufacturer = models.ForeignKey(Manufacturer, on_delete=models.SET_DEFAULT, default=1)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -64,13 +64,10 @@ class Transaction(models.Model):
         choices=TYPES_OF_TRANSACTIONS,
     )
     transaction_amount = models.IntegerField()
-    transaction_product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    transaction_product = models.ForeignKey(Product, on_delete=models.SET_DEFAULT, default=1)
     # CASCADE will delete related transactions when product is deleted
     # DO_NOTHING will not allow deletion of product that has transactions
 
     class Meta:
         managed = True
         db_table = 'transactions'
-
-
- 
